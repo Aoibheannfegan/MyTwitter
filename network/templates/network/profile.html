@@ -1,0 +1,28 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    {% if message %}
+        <div class="message">{{ message }}</div>
+
+    {% else %}
+        <div class="profile-page" >
+            <div class="profile-info">
+                <h2>{{ profile_owner.username }}</h2>
+                <h5 id="follower-count">Followers: {{ profile_owner.followers.count }}</h5>
+                <h5>Following: {{ profile_owner.following.count }}</h5>
+                {% if user.is_authenticated and user != profile_owner %}
+                    {% if user in profile_owner.followers.all %}
+                        <button type="button" class="btn btn-outline-danger" data-user-id="{{ profile_owner.id }}" id="followBtn">Unfollow</button>
+                    {% else %}
+                        <button type="button" class="btn btn-outline-success" data-user-id="{{ profile_owner.id }}" id="followBtn">Follow</button>
+                    {% endif %}
+                {% endif %}
+            </div>
+
+            <div class="profile-posts">
+                {% include "network/pagination.html" %}
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

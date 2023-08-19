@@ -1,0 +1,12 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    {% if user.is_authenticated %}
+        <div>
+            <h1>Following</h1>
+            {% include "network/pagination.html" %}
+        </div>
+    {% else %}
+        <p>Please sign in to view</p>
+    {% endif %}
+{% endblock %}
