@@ -33,6 +33,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -72,6 +73,13 @@ DATABASES = {
     }
 }
 
+if 'DATABASE_URL' in os.environ:
+    DATABASES['default'] = dj_database_url.config(
+        conn_max_age=500,
+        conn_health_checks=True,
+    )
+
+
 AUTH_USER_MODEL = "network.User"
 
 # Password validation
@@ -110,5 +118,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+# The absolute path to the directory where collectstatic will collect static files for deployment.
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# The URL to use when referring to static files (where they will be served from)
+STATIC_URL = '/static/'
+
+# Static file serving.
+# https://whitenoise.readthedocs.io/en/stable/django.html#add-compression-and-caching-support
+STORAGES = {
+    # ...
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
