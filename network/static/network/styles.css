@@ -225,6 +225,7 @@ pagination styles */
 .profile-page {
     display: flex;
     align-items: flex-start;
+    height: 100vh;
 }
 
 .profile-info {
