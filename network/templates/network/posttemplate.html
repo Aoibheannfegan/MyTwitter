@@ -1,9 +1,9 @@
 {% if user.is_authenticated %}
-    <div class="new-post">
-        <form action="{% url 'post' %}" method="post">
+    <div class="create-post-container">
+        <form class="post-form" action="{% url 'post' %}" method="post">
             {% csrf_token %}
-            <textarea id="post" name="post" placeholder="What is happening?!"></textarea>
-            <button id="post-button" type="submit" class="btn btn-primary">Post</button>
+            <textarea id="write-post" name="post" rows="4" placeholder="What is happening?!"></textarea>
+            <button id="post-button" type="submit" class="post-btn">Post</button>
         </form>
     </div>
 {% endif %}

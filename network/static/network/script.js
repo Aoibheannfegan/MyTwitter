@@ -1,10 +1,17 @@
 
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM content loaded')
     const likeButtons = document.querySelectorAll('.likeBtn');
     likeButtons.forEach(button => {
         button.addEventListener('click', likedPost);
     });
     
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+        link.addEventListener('click', addActiveStatus)
+        console.log('nav click click listener added')
+    })
+
     const editButtons = document.querySelectorAll('.editBtn');
     editButtons.forEach(button => {
         button.addEventListener('click', editPost);
@@ -13,6 +20,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const btn = document.getElementById('followBtn');
     btn.addEventListener('click', toggleFollow);
 });
+
+function addActiveStatus(event) {
+    console.log('addActiveStatus function running');
+    const links = document.querySelectorAll('.nav-link');
+ 
+    const isActive = event.target.classList.contains('active');
+
+    if (!isActive) {
+        links.forEach((link) => {
+            link.classList.remove('active');
+        });
+        event.target.classList.add('active');
+        console.log(`Active class added to ${event.target.innerHTML}`)
+    }
+}
 
 
 function getFetchHeaders() {
@@ -63,7 +85,7 @@ function toggleFollow() {
 
 
 function likedPost(event) {
-    console.log("likedPost function called");
+    console.log("likedPost function called and note changed");
 
     const btn = event.currentTarget;
     const postId = btn.getAttribute('data-post-id');
@@ -74,6 +96,11 @@ function likedPost(event) {
     console.log("action:", action);
 
     const headers = getFetchHeaders();
+
+    const likeBtnSvg = document.getElementById(`like-heart-${postId}`)
+    const likeBtnPath = document.getElementById(`like-btn-path-${postId}`)
+    const unlikePath = 'm8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15'
+    const likePath = 'M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314'
 
     fetch(`/like_button/${postId}/`, {
         method: 'POST',
@@ -86,18 +113,28 @@ function likedPost(event) {
     .then(data => {
         if (data.success) {
             // update like count
+            console.log('data fetch successful!')
             const likedCountElem = document.getElementById(`likes-count-${postId}`);
-            likedCountElem.textContent = data.Likes;
+            console.log(`Likes = ${data.Likes}`)
+            if(data.Likes === 1){
+                likedCountElem.textContent = `${data.Likes} like`;
+            } else {
+                likedCountElem.textContent = `${data.Likes} likes`;
+            }
 
             // update button class based on action
             if (action === 'like') {
-                btn.classList.remove('btn-outline-success');
-                btn.classList.add('btn-success');
-                btn.setAttribute('data-action', 'unlike'); 
+                console.log(`like button clicked and svg is: ${likeBtnSvg.id}`)
+                btn.setAttribute('data-action', 'unlike');
+                likeBtnSvg.classList.remove('bi', 'bi-heart');
+                likeBtnSvg.classList.add('bi', 'bi-heart-fill');
+                likeBtnPath.setAttribute('d', likePath);
             } else {
-                btn.classList.remove('btn-success');
-                btn.classList.add('btn-outline-success');
-                btn.setAttribute('data-action', 'like'); 
+                console.log(`unlike btn clicked and svg is: ${likeBtnSvg.id}`)
+                btn.setAttribute('data-action', 'like');
+                likeBtnSvg.classList.remove('bi', 'bi-heart-fill');
+                likeBtnSvg.classList.add('bi', 'bi-heart');
+                likeBtnPath.setAttribute('d', unlikePath);
             }
 
         } else {
@@ -108,7 +145,7 @@ function likedPost(event) {
 
 
 
-function editPost() {
+function editPost(event) {
     console.log("editButton function called");
 
     const editBtn = event.currentTarget;
@@ -127,10 +164,11 @@ function editPost() {
     //replace content with text area with preloaded content and a save button
     const textarea = document.createElement('textarea');
     textarea.value = currentContent;
+    textarea.className = 'edit-text'
     contentElem.replaceWith(textarea);
 
     const saveButton = document.createElement('button');
-    saveButton.className = 'btn btn-info'
+    saveButton.className = 'save-btn'
     saveButton.id = 'save-button'
     saveButton.textContent = "Save";
     textarea.after(saveButton);

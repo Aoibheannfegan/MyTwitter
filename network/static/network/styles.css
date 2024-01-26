@@ -1,81 +1,276 @@
-h1 {
-    text-align: center
+:root {
+    --backgroundcolor: black;
+    --hovercolor: #333533;
+    --primarycolor: #F5CB5C;
+    --white: #FFF3EB;
+    --xlfont: 48px;
+    --lrgfont: 24px;
+    --mdfont: 18px;
+    --smlfont: 14px;
+    --xsmlfont: 10px;
 }
 
-.post-container, .new-post, .login-container, .register-container {
-    max-width: 600px;
-    margin: 20px auto;
+/* general site styles */
+
+nav {
+    background-color: var(--backgroundcolor);
 }
 
-.post {
-    margin: 20px auto;
-    border: 1px solid #e1e8ed;
-    border-radius: 15px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    overflow: hidden;
-    width: auto;
+.nav-link {
+    color: var(--white);
+    text-decoration: none;
 }
 
-.post-header {
-    display: flex;
-    align-items: center;
-    padding: 10px 15px;
-    border-bottom: 1px solid #e1e8ed;
+.nav-link .active {
+    color: var(--primarycolor)
+}
+
+#nav-title {
+    font-size: var(--xlfont);
+    color: var(--primarycolor);
+    text-decoration: none;
+    padding: 0 2rem 0 1rem;
+}
+
+.nav-link:hover {
+    color: var(--primarycolor);
+    text-decoration: none;
+}
+
+.body {
+    background-color: var(--backgroundcolor);
+    color: var(--white);
+}
+
+
+
+/* posts section */
+.post-container {
+    background-color: var(--backgroundcolor);
+    display: grid;
+    justify-content: center;
 }
 
 .post-body {
-    padding: 15px;
+    display: grid;
+}
+.post {
+    margin: 1rem 0 1rem 0;
+    padding: 1rem;
+    border-bottom: 1px solid var(--hovercolor);
+}
+
+.link-to-poster{
+    text-decoration: none;
+    color: var(--white);
+    cursor: pointer; 
+    font-size: var(--mdfont);
+}
+
+.link-to-poster:hover {
+    text-decoration: none;
+    color: var(--primarycolor);
+}
+
+.content {
+    font-size: var(--smlfont);
 }
 
 .post-time {
-    padding-left: 15px;
-    font-size: 12px;
+    font-size: var(--xsmlfont);
 }
 
 .post-footer {
-    border-top: 1px solid #e1e8ed;
-    padding: 10px 15px;
-    font-size: 15px;
-}
-
-textarea, #save-button, #post-button {
-    display: block;
-    padding: 10px;
-    width: 500px;
-    margin: 10px;
-}
-
-.profile-page {
     display: flex;
-    width: 100%;
+    justify-content: flex-start;
 }
 
-.profile-info {
-    flex: 0.25; 
-    padding: 20px;
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1); 
-}
-
-.profile-posts {
-    flex: 0.75;
-    padding: 20px;
-}
-
-.profile-page > * + * {
-    margin-left: 20px;
-}
-
-.message {
-    padding: 20px;
-    font-weight: bolder;
-    text-align: center;
-    font-size: larger;
+.like-edit-container {
+    display: grid;
 }
 
 .like-container {
     display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    align-content: center;
+    justify-items: center;
+}
+
+.likes-count {
+    font-size: var(--smlfont);
+    padding: 0;
+    align-self: flex-end;
+    margin: 0;
+    margin-left: 0.5rem;
+}
+
+.likeBtn {
+    background: none;
+    border: none;
+    padding: 0;
+    outline: none;
+}
+
+.likeBtn:focus {
+    outline: none;
+}
+    
+.editBtn {
+    color: var(--primarycolor);
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    outline: none;
+}
+
+.editBtn:hover {
+    text-decoration: underline;
+}
+
+.save-btn {
+    background: none;
+    border: none;
+    outline: none;
+    padding: 0.3rem;
+    background-color: var(--primarycolor);
+    color: var(--hovercolor);
+    font-weight: 600;
+    font-size: var(--smlfont);
+    margin: 0.3rem 0 0.3rem 0;
+}
+
+.save-btn:hover {
+    transform: scale(1.01);
+    transition: 0.5s ease;
+}
+
+/* create a post styles */
+.new-post-page {
+    height: 100vh;
+}
+
+.create-post-container {
+    display: grid;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.post-form {
+    display: grid;
+    /* justify-content: center; */
+    /* border: 1px solid pink; */
+    width: 60vw;
+    margin: 1rem;
+}
+
+#write-post {
+    background-color: var(--backgroundcolor);
+    margin-bottom: 0.5rem;
+    color: var(--white);
+    border: 1px solid var(--hovercolor);
+    width: 100%;
+    padding: 0.5rem;
+}
+
+.post-btn {
+    border: none;
+    background: none;
+    background-color: var(--primarycolor);
+    color: var(--hovercolor);
+    font-size: var(--mdfont);
+    font-weight: 600;
+    padding: 0.5rem;
+    outline: none;
+}
+
+.post-btn:hover{
+    transform: scale(1.02);
+    transition: 0.5s ease;
+}
+/* 
+pagination styles */
+#pagination-container {
+    display: flex;
     align-items: center;
 }
-.like-container h4 {
-    margin: 0 0 0 10px;
+
+#page-numbers-container {
+    display: flex;
+    align-content: flex-end;
+    height: 100%;
+}
+
+.page-link-numbers {
+    color: var(--primarycolor);
+    background-color: var(--backgroundcolor);
+    border: none;
+    padding: 0 0.5rem 0 0.5rem;
+    margin: 0;
+}
+.page-item.active .page-link {
+    background-color: var(--backgroundcolor);
+    border: none;
+    color: var(--primarycolor);
+}
+
+.page-item.disabled .page-link {
+    background-color: var(--backgroundcolor);
+    border: none;
+    color: var(--hovercolor)
+}
+
+.profile-page {
+    display: flex;
+    align-items: flex-start;
+}
+
+.profile-info {
+    padding: 2rem;
+}
+
+.profile-owner {
+    font-size: var(--lrgfont);
+}
+
+.follower-count, .following-count {
+    font-size: var(--smlfont);
+}
+
+.login-container, .register-container {
+    height: 100vh;
+    display: grid;
+    justify-content: center;
+    align-content: start;
+}
+
+.login-form, .register-form {
+    width: 75vw;
+}
+
+.login-button, .register-button {
+    background: none;
+    border: none;
+    outline: none;
+    background: var(--primarycolor);
+    color: var(--hovercolor);
+    padding: 5px 10px 5px 10px;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    font-size: var(--mdfont);
+}
+
+.login-button:hover, .register-button:hover {
+    transform: scale(1.05);
+    transition: 0.3s ease;
+}
+
+.register-link {
+    color: var(--primarycolor);
+}
+
+.register-link:hover {
+    color: var(--primarycolor);
 }

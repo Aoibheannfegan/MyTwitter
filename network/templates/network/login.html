@@ -8,7 +8,7 @@
             <div>{{ message }}</div>
         {% endif %}
 
-        <form action="{% url 'login' %}" method="post">
+        <form class="login-form" action="{% url 'login' %}" method="post">
             {% csrf_token %}
             <div class="form-group">
                 <input autofocus class="form-control" type="text" name="username" placeholder="Username">
@@ -16,10 +16,11 @@
             <div class="form-group">
                 <input class="form-control" type="password" name="password" placeholder="Password">
             </div>
-            <input class="btn btn-primary" type="submit" value="Login">
+            <button class="login-button" type="submit">Login</button>
         </form>
-
-        Don't have an account? <a href="{% url 'register' %}">Register here.</a>
+        <div class="form-footer">
+            Don't have an account? <a class="register-link" href="{% url 'register' %}">Register here.</a>
+        </div>
     </div>
 
 {% endblock %}
